@@ -1,7 +1,14 @@
 ---
+- name: Install bridge-utils
+  apt: 
+    name: bridge-utils
+    state: present
+  become: True
+
+
 - name: Configure Cluster Net Interface (bridge mode)
   blockinfile:
-    dest: /etc/network/interfaces.d/{{ clusternet_interface }}
+    dest: /etc/network/interfaces.d/{{ clusternet_interface }}.cfg
     block: |
           auto {{ clusternet_interface }} 
           iface {{ clusternet_interface }} inet manual
@@ -14,7 +21,7 @@
 
 - name: Configure Cluster Net Bridge
   blockinfile:
-    dest: /etc/network/interfaces.d/ex-br
+    dest: /etc/network/interfaces.d/ex-br.cfg
     block: |
           auto ex-br 
           iface ex-br inet static
@@ -31,7 +38,7 @@
 
 - name: Configure Kubernetes Bridge
   blockinfile:
-    dest: /etc/network/interfaces.d/kube-br
+    dest: /etc/network/interfaces.d/kube-br.cfg
     block: |
           auto kube-br 
           iface kube-br inet manual
