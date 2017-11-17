@@ -1,0 +1,10 @@
+---
+- hosts: kube_servers 
+  roles:
+      - ubuntu
+      - docker_host 
+      - kube
+
+
+
+
