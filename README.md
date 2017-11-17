@@ -20,3 +20,31 @@ The virtual env is activated by `source ansible-env/bin/activate`. If you exit t
 # Inventory
 Update the ansible/inventory file for your setup. 
 
+## Key Variables:
+1. Per Host Variables
+* `clusternet_ip` IP address used for cluster interface 
+* `podnet_cider` CIDR for the pod network on this host 
+* `ansible_host` IP address for ansible to use to connect to server (most likely same as cluster IP)
+* `ansible_ssh_user` Username for ansible to log in with (ubuntu for Vagrant)
+* `ansible_ssh_pass` Password for ansible to log in with (See box Vagrantfile for Vagrant)
+* `ansible_sudo_pass` Password for sudo once logged into box
+* `clusternet_interface` Inteface to use for cluster (enp0s8 for Vagrant)
+* `clusternet_netmask` Netmask for cluster
+
+2. `bridge_interface` true/false - flag to determine whether to use bridge CNI plugin for cluster
+
+
+# Setup
+After editing inventory, test connectivity:
+```
+ansible -i inventory -m ping all
+```
+
+If all pass, then apply the setup:
+```
+ansible-playbook -i inventory site.yml all
+```
+
+
+
+
