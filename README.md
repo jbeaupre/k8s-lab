@@ -6,6 +6,7 @@ Ansible pre-setup tasks for a k8s cluster on ubuntu 16.04
 Need to have ansible installed. You can easily run it in a virtual env on the development machines.
 
 ```
+sudo apt-get install virtualenv python-pip
 mkdir ansible-env
 virtualenv ansible-env
 source ansible-env/bin/activate
