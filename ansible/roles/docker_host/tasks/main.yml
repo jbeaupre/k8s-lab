@@ -1,0 +1,32 @@
+---
+- name: Install apt-transport-https
+  apt: name=apt-transport-https state=present
+  become: True
+
+- name: Add Docker Key
+  apt_key:
+    keyserver: hkp://p80.pool.sks-keyservers.net:80
+    id: 58118E89F3A912897C070ADBF76221572C52609D
+  become: True
+
+- name: Add Docker Repo
+  apt_repository:
+    repo: deb https://apt.dockerproject.org/repo ubuntu-xenial main
+    state: present
+  become: True
+
+- name: Install Docker
+  apt: name=docker-engine state=present update_cache=yes
+  become: True
+
+- name: Install Python Docker lib
+  apt: name=python-docker state=present
+  become: True
+
+- name: Add user to docker group
+  user:
+   name: {{ ansible_ssh_user }} 
+   groups: docker
+   append: yes
+  become: True
+

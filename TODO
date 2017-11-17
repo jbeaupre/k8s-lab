@@ -1,0 +1,8 @@
+
+modify kubelete systemd profile to add correct node ip
+
+build seperate template to create volume and populate si qcow
+
+
+
+

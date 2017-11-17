@@ -1,0 +1,19 @@
+
+[kube_servers]
+master clusternet_ip=172.42.42.1 podnet_cidr=192.168.1.0/24
+node1  clusternet_ip=172.42.42.2 podnet_cidr=192.168.2.0/24
+node2  clusternet_ip=172.42.42.3 podnet_cidr=192.168.3.0/24
+
+[kube_servers:vars]
+ansible_ssh_user=user 
+ansible_ssh_pass=pass
+ansible_sudo_pass=pass
+
+clusternet_interface=enp12s0
+clusternet_netmask=255.255.255.0
+bridge_interface=true
+
+[kube_nodes]
+node1
+node2
+

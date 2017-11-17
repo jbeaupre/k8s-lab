@@ -1,0 +1,70 @@
+---
+- name: Configure Cluster Net Interface (bridge mode)
+  blockinfile:
+    dest: /etc/network/interfaces.d/{{ clusternet_interface }}
+    block: |
+          auto {{ clusternet_interface }} 
+          iface {{ clusternet_interface }} inet manual
+    create: yes
+  become: True
+
+- name: Enable Cluster Net interface for Bridge
+  command: ifup {{ clusternet_interface }}
+  become: True
+
+- name: Configure Cluster Net Bridge
+  blockinfile:
+    dest: /etc/network/interfaces.d/ex-br
+    block: |
+          auto ex-br 
+          iface ex-br inet static
+             bridge_ports {{ clusternet_interface }} 
+             bridge_stp off
+             address {{ clusternet_ip }}
+             netmask {{ clusternet_netmask }}
+    create: yes
+  become: True
+
+- name: Enable Cluster Net Bridge
+  command: ifup ex-br
+  become: True
+
+- name: Configure Kubernetes Bridge
+  blockinfile:
+    dest: /etc/network/interfaces.d/kube-br
+    block: |
+          auto kube-br 
+          iface kube-br inet manual
+               bridge_stp off
+               bridge_ports none
+    create: yes
+  become: True
+
+- name: Enable Kubernetes Net Bridge
+  command: ifup kube-br
+  become: True
+
+- name: Create veth pair
+  command: ip link add dev vmh1 type veth peer name vmh2
+  args: 
+     creates: /sys/class/net/vmh1
+  become: True
+  notify: 
+    - Enslave vmh1
+    - Enslave vmh2
+
+- name: flush handlers
+  meta: flush_handlers
+
+- name: Enable vmh1
+  command: ifconfig vmh1 up
+  become: True
+
+- name: Enable vmh2
+  command: ifconfig vmh2 up
+  become: True
+
+- name: Enable IP forwarding
+  command: iptables -P FORWARD ACCEPT
+  become: True
+

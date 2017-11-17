@@ -1,0 +1,6 @@
+---
+- include: kubectl.yml
+- include: kubeadm.yml
+
+- include: bridge-cni.yml
+  when: bridge_interface

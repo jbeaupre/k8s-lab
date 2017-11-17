@@ -1,0 +1,8 @@
+---
+- name: Enslave vmh1
+  command: brctl addif kube-br vmh1
+  become: True
+
+- name: Enslave vmh2
+  command: brctl addif ex-br vmh2
+  become: True

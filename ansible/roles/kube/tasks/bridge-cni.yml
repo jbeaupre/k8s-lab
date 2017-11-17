@@ -1,0 +1,26 @@
+---
+- name: Mkdir /etc/cni/net.d
+  file:
+    path: /etc/cni/net.d
+    state: directory
+    mode: 0755
+  become: True   
+
+- name: Copy bridge config
+  template: 
+    src: 10-bridge.conf
+    dest: /etc/cni/net.d/10-bridge.conf
+    owner: root
+    group: root
+    mode: '0600'
+  become: True
+
+- name: Copy Loopback config
+  copy: 
+    src: 99-loopback.conf
+    dest: /etc/cni/net.d/99-loopback.conf
+    owner: root
+    group: root
+    mode: '0600'
+  become: True
+

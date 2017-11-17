@@ -1,0 +1,33 @@
+---
+# steps from here: 
+# https://github.com/dcj/ansible-kubeadm-cluster/blob/develop/roles/kubeadm_install/tasks/Ubuntu.yml
+
+- name: Add Google key to apt
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  become: True
+
+- name: Add Kubernetes apt repo
+  apt_repository:
+    repo: 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
+    filename: kubernetes
+    state: present
+  become: True
+
+- name: Install kubelet package
+  apt:
+    name: kubelet 
+    state: present
+    update_cache: true
+  become: True
+
+- name: Install kubeadm package
+  apt:
+    name: kubeadm
+    state: present
+    update_cache: true
+  become: True
+
+
+
