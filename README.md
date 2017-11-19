@@ -31,7 +31,8 @@ Update the ansible/inventory file for your setup.
 * `clusternet_interface` Inteface to use for cluster (enp0s8 for Vagrant)
 * `clusternet_netmask` Netmask for cluster
 
-2. `bridge_interface` true/false - flag to determine whether to use bridge CNI plugin for cluster
+2. Per Setup Variables
+* `bridge_interface` true/false - flag to determine whether to use bridge CNI plugin for cluster
 
 
 # Setup
@@ -45,6 +46,15 @@ If all pass, then apply the setup:
 ansible-playbook -i inventory site.yml all
 ```
 
+# Cluster
+On the master initialize the cluster with the following:
+```
+kubeadm init --token 2f1a31.00f66dec74fd53f3 --apiserver-advertise-address=172.42.42.1 --pod-network-cidr=192.168.0.0/16 --service-cidr 10.96.0.0/12
+```
+When the command completes run the join command on the nodes:
+```
+
+```
 
 
 
