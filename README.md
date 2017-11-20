@@ -53,7 +53,7 @@ sudo kubeadm init --token 2f1a31.00f66dec74fd53f3 --apiserver-advertise-address=
 ```
 When the command completes run the join command on the nodes:
 ```
-kubeadm join --token 2f1a31.00f66dec74fd53f3 172.42.42.1:6443 --discovery-token-ca-cert-hash sha256:b0656cf8ba7c816acc483babab29970023a3bbfcc9c219fdb4925943ba670143
+ansible -i inventory -a "kubeadm join --token 2f1a31.00f66dec74fd53f3 172.42.42.1:6443 --discovery-token-ca-cert-hash sha256:b0656cf8ba7c816acc483babab29970023a3bbfcc9c219fdb4925943ba670143" --become kube_nodes
 
 ```
 
