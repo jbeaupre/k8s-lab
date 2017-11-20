@@ -44,20 +44,7 @@
       [Service]
       ExecStart=
       ExecStart=/usr/bin/docker daemon -H fd:// --insecure-registry 172.42.42.1
-
-- name: Configure mount for local registry
-  file:
-   path: /mnt/registry
-   state: directory
-
-- name: Start private registry
-  docker_container:
-    name: registry
-    image: registry:2
-    restart: yes
-    ports:
-      - "5000:5000"
-    volumes:
-      - "/mnt/registry:/var/lib/registry"
+  become: True
+  notify: Restart Docker
 
    

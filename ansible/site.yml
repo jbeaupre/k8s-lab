@@ -1,8 +1,16 @@
 ---
-- hosts: kube_servers 
+- hosts: kube_nodes
   roles:
       - ubuntu
       - docker_host 
+      - kube
+
+
+- hosts: kube_master
+  roles:
+      - ubuntu
+      - docker_host
+      - docker_registry
       - kube
 
 
