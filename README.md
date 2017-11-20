@@ -49,10 +49,11 @@ ansible-playbook -i inventory site.yml all
 # Cluster
 On the master initialize the cluster with the following:
 ```
-kubeadm init --token 2f1a31.00f66dec74fd53f3 --apiserver-advertise-address=172.42.42.1 --pod-network-cidr=192.168.0.0/16 --service-cidr 10.96.0.0/12
+sudo kubeadm init --token 2f1a31.00f66dec74fd53f3 --apiserver-advertise-address=172.42.42.1 --pod-network-cidr=192.168.0.0/16 --service-cidr 10.96.0.0/12
 ```
 When the command completes run the join command on the nodes:
 ```
+kubeadm join --token 2f1a31.00f66dec74fd53f3 172.42.42.1:6443 --discovery-token-ca-cert-hash sha256:b0656cf8ba7c816acc483babab29970023a3bbfcc9c219fdb4925943ba670143
 
 ```
 
