@@ -43,10 +43,10 @@ ansible -i inventory -m ping all
 
 If all pass, then apply the setup:
 ```
-ansible-playbook -i inventory site.yml all
+ansible-playbook -i inventory site.yml
 ```
 
-# Cluster
+# Cluster Initialization
 On the master initialize the cluster with the following:
 ```
 sudo kubeadm init --apiserver-advertise-address=172.42.42.1 --pod-network-cidr=192.168.0.0/16 --service-cidr 10.96.0.0/12
@@ -62,5 +62,10 @@ ansible -i inventory -a "kubeadm join --token <INSERT TOKEN> 172.42.42.1:6443 --
 
 ```
 
+# Post Install
+Fix the kubelet listen IP (cosmetic)
+```
+ansible-playbook -i inventory  fix_kubelet.yml
+```
 
 
