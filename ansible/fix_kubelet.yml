@@ -1,0 +1,20 @@
+---
+- hosts: kube_servers
+
+  tasks:
+  - name: Fix kubelet listen IP
+    blockinfile:
+     insertbefore: "ExecStart="
+     path: /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+     block: |
+       Environment="KUBELET_EXTRA_ARGS=--node-ip={{ clusternet_ip }}"
+    become: True
+    notify: Restart kubelet
+
+
+  handlers:
+  - name: Restart kubelet
+    service: name=kubelet state=restarted
+    become: True
+
+
