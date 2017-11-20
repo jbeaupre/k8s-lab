@@ -49,7 +49,7 @@ ansible-playbook -i inventory site.yml all
 # Cluster
 On the master initialize the cluster with the following:
 ```
-sudo kubeadm init --token 2f1a31.00f66dec74fd53f3 --apiserver-advertise-address=172.42.42.1 --pod-network-cidr=192.168.0.0/16 --service-cidr 10.96.0.0/12
+sudo kubeadm init --apiserver-advertise-address=172.42.42.1 --pod-network-cidr=192.168.0.0/16 --service-cidr 10.96.0.0/12
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -58,7 +58,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 When the command completes run the join command on the nodes (see output from kubeadmin init for the join command to run):
 ```
-ansible -i inventory -a "kubeadm join --token 2f1a31.00f66dec74fd53f3 172.42.42.1:6443 --discovery-token-ca-cert-hash <INSERT DISCOVERY TOKEN>" --become kube_nodes
+ansible -i inventory -a "kubeadm join --token <INSERT TOKEN> 172.42.42.1:6443 --discovery-token-ca-cert-hash <INSERT DISCOVERY TOKEN>" --become kube_nodes
 
 ```
 
