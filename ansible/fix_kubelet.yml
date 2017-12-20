@@ -14,7 +14,47 @@
 
   handlers:
   - name: Restart kubelet
-    service: name=kubelet state=restarted
+    systemd: name=kubelet daemon_reload=yes state=restarted
     become: True
+
+- hosts: master
+  tasks:
+  - name: Add routes
+    command: "ip route add {{ hostvars[ item ].podnet_cidr }} via {{ hostvars[ item ].clusternet_ip }}"
+    with_items:
+      - node1
+      - node2
+    become: True
+
+  - name: Enable IP Forwarding
+    command: iptables -P FORWARD ACCEPT
+    become: True
+
+- hosts: node1
+  tasks:
+  - name: Add routes
+    command: "ip route add {{ hostvars[ item ].podnet_cidr }} via {{ hostvars[ item ].clusternet_ip }}"
+    with_items:
+      - master
+      - node2
+    become: True
+
+  - name: Enable IP Forwarding
+    command: iptables -P FORWARD ACCEPT
+    become: True
+
+- hosts: node2
+  tasks:
+  - name: Add routes
+    command: "ip route add {{ hostvars[ item ].podnet_cidr }} via {{ hostvars[ item ].clusternet_ip }}"
+    with_items:
+      - master
+      - node1
+    become: True
+
+  - name: Enable IP Forwarding
+    command: iptables -P FORWARD ACCEPT
+    become: True
+
 
 
