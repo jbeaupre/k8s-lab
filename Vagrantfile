@@ -11,9 +11,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "master" do |master|
     master.vm.box = "ubuntu/xenial64"
     master.vm.hostname = "master"
-    master.vm.network "private_network", ip: "172.42.42.1",
+    master.vm.network "private_network", ip: "172.42.42.10",
       auto_config: false
-    master.vm.network "private_network", ip: "192.168.254.1"
+    master.vm.network "private_network", ip: "192.168.254.10"
     master.vm.provision "shell", path: "master_install.sh"
   end
 
