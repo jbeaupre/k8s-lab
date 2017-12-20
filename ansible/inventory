@@ -1,12 +1,12 @@
 
 [kube_servers]
-master ansible_host=192.168.254.1 clusternet_ip=172.42.42.1 podnet_cidr=192.168.1.0/24
+master ansible_host=192.168.254.10 clusternet_ip=172.42.42.10 podnet_cidr=192.168.1.0/24
 node1  ansible_host=192.168.254.2 clusternet_ip=172.42.42.2 podnet_cidr=192.168.2.0/24
 node2  ansible_host=192.168.254.3 clusternet_ip=172.42.42.3 podnet_cidr=192.168.3.0/24
 
 [kube_servers:vars]
 ansible_ssh_user=ubuntu
-ansible_ssh_pass=3d7d18ebe09a49ff99028120
+ansible_ssh_pass=5f23b747c205d6673df021eb
 
 clusternet_interface=enp0s8
 clusternet_netmask=255.255.255.0
